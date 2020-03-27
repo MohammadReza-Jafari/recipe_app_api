@@ -3,3 +3,4 @@ djangorestframework
 postgres
 psycopg2
 Pillow
+flake8==3.6
