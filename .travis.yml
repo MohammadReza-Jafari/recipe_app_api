@@ -13,4 +13,4 @@ before_script:
   - psql -c "CREATE DATABASE test;" -U postgres
 
 script:
-  - python manage.py test && flake8
+  - python manage.py test
