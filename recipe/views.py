@@ -6,7 +6,10 @@ from core.models import Tag
 from recipe import serializers
 
 
-class TagsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+class TagsViewSet(viewsets.GenericViewSet,
+                  mixins.ListModelMixin,
+                  mixins.CreateModelMixin
+                  ):
     queryset = Tag.objects.all()
     authentication_classes = (TokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated,)
@@ -15,3 +18,5 @@ class TagsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
