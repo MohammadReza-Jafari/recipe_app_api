@@ -9,7 +9,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'c8crb4^j&n9_=76sjjx+1ot*^*h!=r@^-@t#lm^=c@sbkpwh^5'
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -64,7 +63,7 @@ WSGI_APPLICATION = 'recipe_app_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DB_INFO = open('F:\\password.txt',mode='r').read().split('\n')
+DB_INFO = open('F:\\password.txt', mode='r').read().split('\n')
 
 DATABASES = {
     'default': {
@@ -116,5 +115,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'core.User'
