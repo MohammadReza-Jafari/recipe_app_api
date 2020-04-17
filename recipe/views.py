@@ -13,7 +13,9 @@ class BaseRecipeAttr(viewsets.GenericViewSet,
     authentication_classes = (TokenAuthentication, SessionAuthentication)
 
     def get_queryset(self):
-        return self.queryset.filter(user=self.request.user)
+        if self.request.user.is_authenticated:
+            return self.queryset.filter(user=self.request.user)
+        return self.queryset
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -42,3 +44,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
         if self.action == 'retrieve':
             return serializers.RecipeDetailSerializer
         return self.serializer_class
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
