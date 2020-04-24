@@ -16,9 +16,11 @@ class BaseRecipeAttr(viewsets.GenericViewSet,
     authentication_classes = (TokenAuthentication, SessionAuthentication)
 
     def get_queryset(self):
-        if self.request.user.is_authenticated:
-            return self.queryset.filter(user=self.request.user)
-        return self.queryset
+        assigned_only = bool(self.request.query_params.get('assigned_only'))
+        queryset = self.queryset
+        if assigned_only:
+            queryset = self.queryset.filter(recipe__isnull=False)
+        return queryset.filter(user=self.request.user).distinct()
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
